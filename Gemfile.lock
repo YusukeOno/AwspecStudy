@@ -1,0 +1,1 @@
+docker run --rm -it -v "$(pwd)":/home/app -w /home/app ruby:2.7 bundle install
