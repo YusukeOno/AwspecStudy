@@ -13,3 +13,18 @@ jobs:
           name: Which bundler?
           command: bundle -v
       - ruby/bundle-install
+  infratest:
+    docker:
+      - image: circleci/ruby:2.7
+    environment:
+      # TODO: 環境変数から取得するようにする
+      - AWS_REGION: ap-northeast-1
+    steps:
+      - checkout
+
+workflows:
+  version: 2
+  example_workflow:
+    jobs:
+      - build
+      - infratest
