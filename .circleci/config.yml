@@ -12,13 +12,13 @@ commands:
   persist-workspace:
     steps:
       - persist_to_workspace:
-          root: ~/workspace
+          root: .
           paths:
-            - ./*
+            - .
   attach-workspace:
     steps:
       - attach_workspace:
-          at: ~/workspace
+          at: .
   bundle-install:
     steps:
       - run:
