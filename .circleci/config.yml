@@ -38,7 +38,6 @@ jobs:
     executor: default
     steps:
       - checkout
-      - bundle-install
       - persist-workspace
 
   infra-test:
