@@ -3,28 +3,48 @@ orbs:
   ruby: circleci/ruby@0.1.2
 
 executors:
+  working_directory: ~/workspace
   default:
     docker:
       - image: circleci/ruby:2.7
+
+commands:
+  persist-workspace:
+    steps:
+      - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - ./*
+  attach-workspace:
+    steps:
+      - attach_workspace:
+          at: ~/workspace
+  bundle-install:
+    steps:
+      - run:
+          name: Install Bundle
+          command: gem install bundler
+      - run:
+          name: install gems
+          command: bundle install --path vendor/bundle
 
 jobs:
   build:
     executor: default
     steps:
       - checkout
-      - run:
-          name: Install Bundle
-          command: gem install bundler
-      - run:
-          name: Install awspec
-          command: bundle install --path vendor/bundle
+      - bundle-install
+      - persist-workspace
+      # - run:
+      #     name: Install awspec
+      #     command: bundle install --path vendor/bundle
       # - run:
       #     name: exec awspec (wip)
       #     command: bundle exec rake spec
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
+      # - persist_to_workspace:
+      #     root: .
+      #     paths:
+      #       - .
 
   infratest:
     executor: default
@@ -33,8 +53,10 @@ jobs:
       # - AWS_REGION: ${AWS_REGION}
       # - AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
     steps:
-      - attach_workspace:
-          at: .
+      - attach-workspace
+      - bundle-install
+      # - attach_workspace:
+      #     at: .
       - run:
           name: infra test - vpc
           command: bundle exec rake spec
