@@ -13,9 +13,14 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Which bundler?
-          command: bundle -v
-      - ruby/bundle-install
+          name: Install Bundle
+          command: gem install bundler
+      - run:
+          name: Install awspec
+          command: bundle install --path vendor/bundle
+      - run:
+          name: exec awspec (wip)
+          command: bundle exec rake spec
   infratest:
     executor: default
     environment:
