@@ -51,6 +51,11 @@ jobs:
       - attach-workspace
       - bundle-install
       - test-vpc
+      - store_test_results:
+          path: ~/awspec
+      - store_artifacts:
+          path: ~/awspec
+
       # - run:
       #     name: check vpc
       #     command: bundle exec rake spec
