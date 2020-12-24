@@ -27,4 +27,6 @@ workflows:
   example_workflow:
     jobs:
       - build
-      - infratest
+      - infratest:
+          requires:
+            - build
