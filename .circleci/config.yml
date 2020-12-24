@@ -34,14 +34,14 @@ commands:
           command: bundle exec rake spec
 
 jobs:
-  build:
+  setup:
     executor: default
     steps:
       - checkout
       - bundle-install
       - persist-workspace
 
-  infratest:
+  infra-test:
     executor: default
     environment:
       # - AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
@@ -51,11 +51,10 @@ jobs:
       - attach-workspace
       - bundle-install
       - test-vpc
-      - store_test_results:
-          path: ~/awspec
-      - store_artifacts:
-          path: ~/awspec
-
+      # - store_test_results:
+      #     path: ~/awspec
+      # - store_artifacts:
+      #     path: ~/awspec
       # - run:
       #     name: check vpc
       #     command: bundle exec rake spec
@@ -63,7 +62,7 @@ workflows:
   version: 2
   build_and_test_workflow:
     jobs:
-      - build
-      - infratest:
+      - setup
+      - infra-test:
           requires:
-            - build
+            - setup
