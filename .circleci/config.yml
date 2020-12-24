@@ -24,7 +24,7 @@ jobs:
 
 workflows:
   version: 2
-  example_workflow:
+  build_and_test_workflow:
     jobs:
       - build
       - infratest:
