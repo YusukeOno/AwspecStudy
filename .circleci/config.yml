@@ -19,12 +19,18 @@ commands:
           at: .
   bundle-install:
     steps:
+      - restore_cache:
+          key: bundle-{{ checksum "Gemfile.lock" }}
       - run:
           name: Install Bundle
           command: gem install bundler
       - run:
           name: install gems
           command: bundle install --path vendor/bundle
+      - save_cache:
+          key: bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
   test-vpc:
     steps:
       - run:
