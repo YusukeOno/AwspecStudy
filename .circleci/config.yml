@@ -23,7 +23,9 @@ jobs:
       # - AWS_REGION: ${AWS_REGION}
       # - AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
     steps:
-      - checkout
+      - run:
+          name: infra test - vpc
+          command: echo hi
       # - run:
       #     name: check vpc
       #     command: bundle exec rake spec
