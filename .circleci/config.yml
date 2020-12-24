@@ -27,6 +27,11 @@ commands:
       - run:
           name: install gems
           command: bundle install --path vendor/bundle
+  test-vpc:
+    steps:
+      - run:
+          name: infra test - vpc
+          command: bundle exec rake spec
 
 jobs:
   build:
@@ -35,16 +40,6 @@ jobs:
       - checkout
       - bundle-install
       - persist-workspace
-      # - run:
-      #     name: Install awspec
-      #     command: bundle install --path vendor/bundle
-      # - run:
-      #     name: exec awspec (wip)
-      #     command: bundle exec rake spec
-      # - persist_to_workspace:
-      #     root: .
-      #     paths:
-      #       - .
 
   infratest:
     executor: default
@@ -55,11 +50,7 @@ jobs:
     steps:
       - attach-workspace
       - bundle-install
-      # - attach_workspace:
-      #     at: .
-      - run:
-          name: infra test - vpc
-          command: bundle exec rake spec
+      - test-vpc
       # - run:
       #     name: check vpc
       #     command: bundle exec rake spec
