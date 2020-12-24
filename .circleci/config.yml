@@ -18,9 +18,14 @@ jobs:
       - run:
           name: Install awspec
           command: bundle install --path vendor/bundle
-      - run:
-          name: exec awspec (wip)
-          command: bundle exec rake spec
+      # - run:
+      #     name: exec awspec (wip)
+      #     command: bundle exec rake spec
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
   infratest:
     executor: default
     environment:
@@ -28,9 +33,11 @@ jobs:
       # - AWS_REGION: ${AWS_REGION}
       # - AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: infra test - vpc
-          command: echo hi
+          command: bundle exec rake spec
       # - run:
       #     name: check vpc
       #     command: bundle exec rake spec
