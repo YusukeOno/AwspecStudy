@@ -19,11 +19,11 @@ commands:
           at: .
   bundle-install:
     steps:
-      - restore_cache:
-          key: bundle-{{ checksum "Gemfile.lock" }}
       - run:
           name: Install Bundle
           command: gem install bundler
+      - restore_cache:
+          key: bundle-{{ checksum "Gemfile.lock" }}
       - run:
           name: install gems
           command: bundle install --path vendor/bundle
