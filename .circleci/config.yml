@@ -31,10 +31,10 @@ commands:
           key: bundle-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-  test-vpc:
+  test:
     steps:
       - run:
-          name: infra test - vpc
+          name: infra test
           command: bundle exec rake spec
 
 jobs:
@@ -49,7 +49,7 @@ jobs:
     steps:
       - attach-workspace
       - bundle-install
-      - test-vpc
+      - test
 
 workflows:
   version: 2
